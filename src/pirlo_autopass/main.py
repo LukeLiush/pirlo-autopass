@@ -13,12 +13,9 @@ from pirlo_autopass.models import (
     AutopassRunOutput,
     SubtaskExecutionOutput,
 )
-from pirlo_autopass.subplays import (
-    ExecuteSubtaskPlay,
-    QuickProgressListener,
-)
+from pirlo_autopass.subplays import ExecuteSubtaskPlay
 
-__all__ = ["AutopassPlay", "QuickProgressListener"]
+__all__ = ["AutopassPlay"]
 
 
 @play(
