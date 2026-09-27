@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 import pytest
-
 from pirlo.core.services.blueprint_extractor import BlueprintExtractor
+
 from pirlo_autopass.main import AutopassPlay
 from pirlo_autopass.models import (
     AutopassRunOutput,
@@ -32,6 +32,7 @@ def test_autopass_blueprint_extraction():
 async def test_autopass_dag_execution(monkeypatch, tmp_path):
     monkeypatch.setenv("PIRLO_WORKSPACE", str(tmp_path))
     from pirlo.infrastructure.services.profile_manager import ProfileManager
+
     from pirlo_autopass.models import SubtaskExecutionOutput
 
     ProfileManager.save_profile_metadata("default")

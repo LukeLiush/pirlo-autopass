@@ -5,7 +5,6 @@ from collections.abc import Callable
 from typing import Any
 
 from browser_use.llm.base import BaseChatModel as BrowserUseChatModel
-
 from pirlo.core.models.link import SUPPORTED_PROVIDERS, LlmLink
 
 _ADAPTER_REGISTRY: dict[str, type[BrowserUseChatModelAdapter]] = {}
@@ -34,9 +33,7 @@ class GoogleChatModelAdapter(BrowserUseChatModelAdapter):
     def convert(self, link: LlmLink, **kwargs: Any) -> BrowserUseChatModel:
         from browser_use.llm.google.chat import ChatGoogle
 
-        return ChatGoogle(
-            model=link.model, api_key=link.api_key or None, **kwargs
-        )
+        return ChatGoogle(model=link.model, api_key=link.api_key or None, **kwargs)
 
 
 @register_browser_use_adapter("anthropic")
@@ -44,9 +41,7 @@ class AnthropicChatModelAdapter(BrowserUseChatModelAdapter):
     def convert(self, link: LlmLink, **kwargs: Any) -> BrowserUseChatModel:
         from browser_use.llm.anthropic.chat import ChatAnthropic
 
-        return ChatAnthropic(
-            model=link.model, api_key=link.api_key or None, **kwargs
-        )
+        return ChatAnthropic(model=link.model, api_key=link.api_key or None, **kwargs)
 
 
 @register_browser_use_adapter("openai", "dashscope")

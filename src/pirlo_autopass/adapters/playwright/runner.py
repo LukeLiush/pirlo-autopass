@@ -3,17 +3,16 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from playwright.async_api import Browser as PlaywrightBrowser
-from playwright.async_api import BrowserContext as PlaywrightContext
-from playwright.async_api import Page as PlaywrightPage
-from playwright.async_api import async_playwright
-
 from pirlo.core.models.actions import DoneAction
 from pirlo.core.models.browser_config import BrowserConfig
 from pirlo.core.models.execution_context import DEFAULT_CONTEXT, ExecutionContext
 from pirlo.core.models.workflow import Workflow
 from pirlo.core.repository.workflow_repository import WorkflowRepository
 from pirlo.core.services.workflow_runner import WorkflowRunner
+from playwright.async_api import Browser as PlaywrightBrowser
+from playwright.async_api import BrowserContext as PlaywrightContext
+from playwright.async_api import Page as PlaywrightPage
+from playwright.async_api import async_playwright
 
 from .adapter import PlaywrightAdapter
 

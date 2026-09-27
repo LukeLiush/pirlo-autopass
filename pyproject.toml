@@ -24,6 +24,15 @@ dev = [
     "ruff>=0.16.0",
 ]
 
+[tool.uv.sources]
+pirlo = { path = "../pirlo", editable = true }
+
+[tool.ruff.lint]
+ignore = [
+    "BLE001",
+    "S110",
+]
+
 [tool.mypy]
 exclude = ["^tests/"]
 ignore_missing_imports = true

@@ -8,13 +8,12 @@ from datetime import UTC, datetime
 import httpx
 from browser_use import BrowserSession
 from browser_use.browser.events import SwitchTabEvent
-from playwright.async_api import Page as PlaywrightPage
-
 from pirlo.core.models.browser_config import BrowserConfig
 from pirlo.core.models.execution_context import DEFAULT_CONTEXT, ExecutionContext
-from pirlo.core.models.workflow import Workflow, WorkflowMetadata
+from pirlo.core.models.workflow import WorkflowMetadata
 from pirlo.core.repository.workflow_repository import WorkflowRepository
 from pirlo.core.services.workflow_runner import WorkflowRunner
+from playwright.async_api import Page as PlaywrightPage
 
 from ..browser_agent.factory import BrowserAgentFactory
 from .history_converter import convert_history_to_workflow
@@ -42,8 +41,7 @@ class LlmWorkflowRunner(WorkflowRunner[PlaywrightPage]):
         if page is None or not self.browser_config.cdp_url:
             raise ValueError("LlmWorkflowRunner requires active page and CDP URL")
         workflow_id = (
-            context.cache_key
-            or hashlib.sha256(task_prompt.encode()).hexdigest()[:16]
+            context.cache_key or hashlib.sha256(task_prompt.encode()).hexdigest()[:16]
         )
 
         browser = BrowserSession(

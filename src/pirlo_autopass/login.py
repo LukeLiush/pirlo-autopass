@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Annotated, Any
 
 from cloakbrowser import launch_persistent_context_async
-
 from pirlo.core.decorators import play
 from pirlo.core.models.blueprint import PlayOutput
 from pirlo.core.models.parameters import Parameter

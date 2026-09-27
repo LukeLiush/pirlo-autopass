@@ -3,7 +3,7 @@ from .factory import BrowserAgentFactory, DefaultBrowserAgentFactory
 
 __all__ = [
     "BrowserAgentFactory",
-    "DefaultBrowserAgentFactory",
     "BrowserUseAdapterRegistry",
+    "DefaultBrowserAgentFactory",
     "register_browser_use_adapter",
 ]

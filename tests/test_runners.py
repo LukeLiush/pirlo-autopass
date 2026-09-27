@@ -1,7 +1,7 @@
 import asyncio
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
 
 from pirlo.core.models.actions import (
@@ -14,6 +14,7 @@ from pirlo.core.models.browser_config import BrowserConfig
 from pirlo.core.models.execution_context import ExecutionContext
 from pirlo.core.models.workflow import Workflow
 from pirlo.infrastructure.repository import JsonFileWorkflowRepository
+
 from pirlo_autopass.adapters.playwright import (
     PlaywrightAdapter,
     PlaywrightReplayRunner,

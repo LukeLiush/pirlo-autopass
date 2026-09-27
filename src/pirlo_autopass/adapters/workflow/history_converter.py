@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from browser_use.agent.views import AgentHistoryList
-
 from pirlo.core.models.actions import (
     Action,
     ClickAction,
@@ -58,9 +57,7 @@ def convert_history_to_workflow(
                     case "extract_page_content":
                         actions.append(ExtractContentAction())
                     case "done":
-                        actions.append(
-                            DoneAction(text=act_params.get("text", "Done"))
-                        )
+                        actions.append(DoneAction(text=act_params.get("text", "Done")))
     return Workflow(
         workflow_id=workflow_id,
         description=description,

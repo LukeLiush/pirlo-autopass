@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 import asyncio
-from datetime import UTC, datetime
 import logging
-from typing import Any, Callable, Coroutine
-
-from playwright.async_api import Page
+from collections.abc import Callable, Coroutine
+from datetime import UTC, datetime
+from typing import Any
 
 from pirlo.core.models.actions import (
     Action,
@@ -20,6 +19,7 @@ from pirlo.core.models.actions import (
 )
 from pirlo.core.models.specifications import SafetyCandidate
 from pirlo.core.models.workflow import Workflow
+from playwright.async_api import Page
 
 from .support import PageContentSanitizer, ResilientLocatorResolver, ResilientPageWaiter
 
@@ -37,7 +37,8 @@ class PlaywrightAdapter:
     async def execute_workflow(
         self,
         workflow: Workflow,
-        on_step_update: Callable[[int, Action], Coroutine[Any, Any, None]] | None = None,
+        on_step_update: Callable[[int, Action], Coroutine[Any, Any, None]]
+        | None = None,
     ) -> None:
         for idx, action in enumerate(workflow.actions):
             action.step_number = idx + 1
@@ -62,7 +63,7 @@ class PlaywrightAdapter:
                 action.finished_at = datetime.now(UTC)
                 if on_step_update:
                     await on_step_update(step_num, action)
-            except Exception as e:
+            except Exception:
                 action.status = ActionStatus.FAILED
                 action.finished_at = datetime.now(UTC)
                 if on_step_update:

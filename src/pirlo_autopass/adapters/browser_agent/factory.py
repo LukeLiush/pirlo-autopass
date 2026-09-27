@@ -5,7 +5,6 @@ from pathlib import Path
 from typing import Any
 
 from browser_use import Agent, Browser, Controller
-
 from pirlo.core.models.link import LlmLink
 
 from .adapters import BrowserUseAdapterRegistry

@@ -6,8 +6,8 @@ from pathlib import Path
 from typing import Any
 
 from cloakbrowser import launch_persistent_context_async
-
 from pirlo.infrastructure.services.profile_manager import ProfileManager
+
 from pirlo_autopass.core.ports import BrowserManager as BaseBrowserManager
 
 

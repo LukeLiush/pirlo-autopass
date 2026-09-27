@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from pirlo.core.models.link import LlmLink
+
 from pirlo_autopass.adapters.browser_agent import DefaultBrowserAgentFactory
 
 sample_link = LlmLink(

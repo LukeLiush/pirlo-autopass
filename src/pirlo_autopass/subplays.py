@@ -20,6 +20,7 @@ from pirlo.infrastructure.repository.json_file_workflow_repository import (
     JsonFileWorkflowRepository,
 )
 from pirlo.infrastructure.services.profile_manager import ProfileManager
+
 from pirlo_autopass.adapters.browser_agent.factory import (
     BrowserAgentFactory,
     DefaultBrowserAgentFactory,
@@ -86,7 +87,7 @@ class DecomposeTaskPlay(Play[TaskDecompositionOutput]):
                     for s in subtasks
                     if getattr(s, "task_prompt", str(s)).strip()
                 ]
-            except Exception as err:  # noqa: BLE001
+            except Exception as err:
                 logger.warning(
                     f"LLM task decomposition failed, falling back to direct prompt: {err}"
                 )
@@ -181,28 +182,28 @@ class ExecuteSubtaskPlay(Play[SubtaskExecutionOutput]):
         )
 
         try:
-            async with browser_manager.session() as session:
-                async with session.new_page() as page:
-                    slug_prompt = slugify(prompt)
-                    context = ExecutionContext(
-                        page=page,
-                        cache_key=f"subtask_execution_{slug_prompt}",
-                        run_id="subtask_run",
+            async with (
+                browser_manager.session() as session,
+                session.new_page() as page,
+            ):
+                slug_prompt = slugify(prompt)
+                context = ExecutionContext(
+                    page=page,
+                    cache_key=f"subtask_execution_{slug_prompt}",
+                    run_id="subtask_run",
+                )
+                with self.ui.status(f"Executing subtask: {prompt}"):
+                    msg = await self_healing_runner.run(
+                        task_prompt=prompt,
+                        context=context,
                     )
-                    with self.ui.status(f"Executing subtask: {prompt}"):
-                        msg = await self_healing_runner.run(
-                            task_prompt=prompt,
-                            context=context,
-                        )
-                    self.ui.goal(
-                        "Subtask completed successfully!", detail=f"Result: {msg}"
-                    )
-                    return SubtaskExecutionOutput(
-                        subtask_prompt=prompt,
-                        result_message=str(msg),
-                        success=True,
-                    )
-        except Exception as err:  # noqa: BLE001
+                self.ui.goal("Subtask completed successfully!", detail=f"Result: {msg}")
+                return SubtaskExecutionOutput(
+                    subtask_prompt=prompt,
+                    result_message=str(msg),
+                    success=True,
+                )
+        except Exception as err:
             self.ui.red_card("Subtask failed with error!", detail=str(err))
             return SubtaskExecutionOutput(
                 subtask_prompt=prompt,

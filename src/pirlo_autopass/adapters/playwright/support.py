@@ -5,22 +5,23 @@ import logging
 import re
 from typing import Any
 
-from playwright.async_api import Locator, Page
-
 from pirlo.core.models.actions import ElementContext
+from playwright.async_api import Locator, Page
 
 logger = logging.getLogger(__name__)
 
 
 class PageContentSanitizer:
     def __init__(self) -> None:
+        self._converter: Any = None
         try:
             import html2text
 
-            self._converter = html2text.HTML2Text()
-            self._converter.ignore_links = False
-            self._converter.ignore_images = True
-            self._converter.body_width = 0
+            converter = html2text.HTML2Text()
+            converter.ignore_links = False
+            converter.ignore_images = True
+            converter.body_width = 0
+            self._converter = converter
         except ImportError:
             self._converter = None
 
